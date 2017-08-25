@@ -7,7 +7,7 @@ clean:
 		rm Control/*.o Control/UI/*.o *.o *.a Main
 
 Main.o:	Main.hs Control/Automaton.hs Control/UI/Cellular.hs libgui.a
-		ghc -O -Wall Main.hs libgui.a $(shell pkg-config --libs gtk+-3.0)
+		ghc -O -Wall -Werror Main.hs libgui.a $(shell pkg-config --libs gtk+-3.0)
 
 libgui.a:	gui.o
 		ar rcs libgui.a gui.o
