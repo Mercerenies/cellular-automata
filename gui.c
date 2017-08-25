@@ -4,6 +4,10 @@
 
 char cPositionOf(int rule, int row, int col);
 
+typedef char (*position_t)(int, int, int);
+
+position_t position_of = NULL;
+
 GtkWidget* window;
 GtkWidget* grid;
 
@@ -39,7 +43,7 @@ static gboolean draw_callback(GtkWidget* widget, cairo_t* cr, gpointer user_data
     for (int c = 0; c < col_count; c++) {
       int i = floor(c - col_count / 2);
       cairo_rectangle(cr, c * square_width, r * square_height, square_width, square_height);
-      double x = (cPositionOf((int)gtk_range_get_value(GTK_RANGE(rule)), r, i) ? 0 : 1);
+      double x = (position_of((int)gtk_range_get_value(GTK_RANGE(rule)), r, i) ? 0 : 1);
       cairo_set_source_rgb(cr, x, x, x);
       cairo_fill(cr);
     }
@@ -98,10 +102,11 @@ static void activate(GtkApplication* app, gpointer user_data) {
   gtk_widget_show_all(window);
 }
 
-GtkApplication* init_application() {
+GtkApplication* init_application(position_t func) {
   GtkApplication* app = gtk_application_new("com.mercerenies.gtk.cellular",
                                             G_APPLICATION_FLAGS_NONE);
   g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
+  position_of = func;
   return app;
 }
 

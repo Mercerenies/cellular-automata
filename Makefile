@@ -6,7 +6,7 @@ all:	Main.o
 clean:
 		rm Control/*.o Control/UI/*.o *.o *.a Main
 
-Main.o:	Main.hs Control/Automaton.hs Control/UI/Cellular.hs libgui.a
+Main.o:	Main.hs Control/Automaton.hs Control/Memo.hs Control/UI/Cellular.hs libgui.a
 		ghc -O -Wall -Werror Main.hs libgui.a $(shell pkg-config --libs gtk+-3.0)
 
 libgui.a:	gui.o
