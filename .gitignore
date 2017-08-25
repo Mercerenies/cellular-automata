@@ -1,0 +1,6 @@
+*~
+*.hi
+*.o
+*.a
+Main
+*_stub.h
